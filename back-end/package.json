@@ -1,0 +1,17 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "Node.js RESTful API for tic-tac-toe",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "Node",
+    "RESTful",
+    "API"
+  ],
+  "author": "Empty for now",
+  "license": "ISC"
+}
