@@ -1,13 +1,12 @@
 // New server
 const http = require("http");
+const routes = require("./routes");
+// require('mongoose') is a library that allows you to interact with MongoDB databases.
 // require('http') is a built-in Node.js module that allows you to create an HTTP server.
+
 const ser = http
   .createServer((req, res) => {
-    res.writeHead(200, { "Content-Type": "application/json" }).end(
-      JSON.stringify({
-        message: "Hello World",
-      })
-    );
+    routes(req, res);
   })
   .listen(3000, () => {
     console.log("Server is running on http://localhost:3000");
