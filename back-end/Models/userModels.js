@@ -66,5 +66,34 @@ class User {
       : (error = [...(error || []), "Email is not valid"]);
     return error;
   }
+  async validUpdateUser(data, user_id) {
+    await this.getCollection();
+    const user = await this.collection.findOne({
+      _id: ObjectId.createFromHexString(user_id),
+    });
+    let error = null;
+    user ? null : (error = [...(error || []), "User not found"]);
+    data.username
+      ? this.collection.find((u) => u.username === data.username)
+        ? (error = [...(error || []), "Username already exists"])
+        : null
+      : null;
+    data.email
+      ? this.collection.find((u) => u.email === data.email)
+        ? (error = [...(error || []), "Email already exists"])
+        : null
+      : null;
+    data.username?.length < 3
+      ? (error = [...(error || []), "Username must be at least 3 characters"])
+      : null;
+    data.email
+      ? data.email?.includes("@") &&
+        data.email?.includes(".") &&
+        data.email?.length > 5
+        ? null
+        : (error = [...(error || []), "Email is not valid"])
+      : null;
+    return error;
+  }
 }
 module.exports = User;

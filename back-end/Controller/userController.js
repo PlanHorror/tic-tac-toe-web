@@ -70,12 +70,48 @@ class UserController {
           console.log(error);
         }
         break;
-      //   case "PUT":
-      //     this.updateUser(req, res);
-      //     break;
-      //   case "DELETE":
-      //     this.deleteUser(req, res);
-      //     break;
+      case "PUT" || "PATCH":
+        this.user.validUpdateUser(data, user_id).then((error) => {
+          if (error) {
+            res.writeHead(400, { "Content-Type": "application/json" });
+            res.write(JSON.stringify({ message: error }));
+            res.end();
+          } else {
+            this.user.update(url[2], data).then((user) => {
+              res.writeHead(200, { "Content-Type": "application/json" });
+              res.write(
+                JSON.stringify({ message: "User updated", user: user })
+              );
+              res.end();
+            });
+          }
+        });
+        break;
+      //   this.updateUser(req, res);
+      //   break;
+      case "DELETE":
+        if (url.length !== 3) {
+          res.writeHead(404, { "Content-Type": "application/json" });
+          res.write(JSON.stringify({ message: "Not Found" }));
+          res.end();
+          break;
+        }
+        this.user.getCollection().then(() => {
+          this.user.getById(url[2]).then((user) => {
+            if (user) {
+              this.user.delete(url[2]).then(() => {
+                res.writeHead(200, { "Content-Type": "application/json" });
+                res.write(JSON.stringify({ message: "User deleted" }));
+                res.end();
+              });
+            } else {
+              res.writeHead(404, { "Content-Type": "application/json" });
+              res.write(JSON.stringify({ message: "User not found" }));
+              res.end();
+            }
+          });
+        });
+        break;
       default:
         res.writeHead(404, { "Content-Type": "application/json" });
         res.write(JSON.stringify({ message: "Method not allowed" }));

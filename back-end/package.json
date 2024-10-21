@@ -15,6 +15,9 @@
   "author": "Empty for now",
   "license": "ISC",
   "dependencies": {
-    "mongoose": "^8.7.1"
+    "help": "^3.0.2",
+    "mongoose": "^8.7.1",
+    "socket.io": "^4.8.0",
+    "ws": "^8.18.0"
   }
 }
